@@ -13,15 +13,27 @@ os.chdir(executable_dir)
 class Leader:
 
     def __init__(self, name):
-        self.name = name        #atributa bude určená až při vytváření objektu
-        self.hp = 1             #atributa je 1 u každého objektu této třídy do té doby, než je změněna.       počet životů
-        self.defence = 0        #počítá pokolikáté se bojovník/velitel brání
-        self.attack = 0         #určuje na koho bojovník/ kapitán útočí
-        self.maxsh = False      #bude True pokud byl dosažen maximální počet bránění po sobě
-        self.special = 0        #určuje jakou specialku bojovník má (kapitam žádnou nemá, proto zůstane 0), Specialky se dají použít jednou za hru
-        self.dead = False       #True pokud hp je menší než 1
-        self.using_special = 0  #změní se v 1 pokud bojovník využívá specialku v tomto tahu
-        self.item = 0           #určuje jaký item bojovník má (kapitam žádnou nemá, proto zůstane 0)
+        self.name = name        
+        #atributa bude určená až při vytváření objektu
+        self.hp = 1
+        #atributa je 1 u každého objektu této třídy do té doby,
+        #než je změněna.
+        #počet životů
+        self.defence = 0       
+        #počítá pokolikáté se bojovník/velitel brání
+        self.attack = 0         
+        #určuje na koho bojovník/ velitel útočí
+        self.maxsh = False      
+        #bude True pokud byl dosažen maximální počet bránění po sobě
+        self.special = 0        
+        #určuje jakou specialku bojovník má (velitel žádnou nemá,
+        #proto zůstane 0, Specialky se dají použít jednou za hru
+        self.dead = False       
+        #True pokud hp je menší než 1
+        self.using_special = 0  
+        #změní se v 1 pokud bojovník využívá specialku v tomto tahu
+        self.item = 0           
+        #určuje jaký item bojovník má (velitel žádnou nemá, proto zůstane 0
 
 
 class Warrior:
@@ -34,10 +46,12 @@ class Warrior:
         self.defence = 0
         self.attack = 0
         self.maxsh = False                  
-        self.specialmem = 0     #pokud specialmem je roven nule tak byla už specialka využita
+        self.specialmem = 0     
+        #pokud specialmem je roven nule tak byla už specialka využita
         self.dead = False
         self.item = 0
-        self.quick_boots = False    #potřebné pro třetí item
+        self.quick_boots = False    
+        #potřebné pro třetí předmět
         
 
 list_of_specials = [0, "Doubled Attack","Lasting Shield","Shield Break","Regenerate"]   
@@ -52,8 +66,8 @@ class Battle:
         self.round = 0                  #počet kol
         self.warriors_total = 0         #počet bojovníků naživu
         self.enemy_warriors_total = 0   #počet nepřátel naživu
-        self.leader = False             #zdali vyšel kapitán
-        self.leaderX = False            #zdali vyšel nepřátelský kapitán
+        self.leader = False             #zdali vyšel velitel
+        self.leaderX = False            #zdali vyšel nepřátelský velitel
         self.cpu = 0                    #který protivník proti nám bude hrát
 
     def declare_warriors(self):
@@ -62,7 +76,7 @@ class Battle:
 
         leader_1 = Leader("     You     ")
         enemy_leader_1 = Leader("Enemy Leader")
-        #tvorba kapitánů
+        #tvorba velitelů
 
         warrior_1 = Warrior("Warrior 1")
         warrior_2 = Warrior("Warrior 2")
@@ -93,47 +107,45 @@ class Battle:
         print("\n\n\nChoose which Specials your Warriors will have.")
 
         
-        for i, warrior in enumerate(list_of_warriors):
+        for i, warrior in enumerate(list_of_warriors_2):
             #vybere bojovníky ze seznamu
-            if i < 3:
-                #kapitán je čtvrtý a nemá mít speciálku
-                while True:
-                        try:
-                            print("\nChoose Special for " + warrior.name + ".")
-                            for j in range(len(list_of_specials_choosing)-1):            
-                                j += 1
-                                print(f"({j}) {list_of_specials_choosing[j]}", end="  ")   
-                                #vypíše výběr schopností vedle sebe
+            while True:
+                    try:
+                        print("\nChoose Special for " + warrior.name + ".")
+                        for j in range(len(list_of_specials_choosing)-1):            
+                            j += 1
+                            print(f"({j}) {list_of_specials_choosing[j]}", end="  ")   
+                            #vypíše výběr schopností vedle sebe
 
-                            choose_special = input("\n\n> ")             
-                            if 1 > int(choose_special) or int(choose_special) > int(list_of_special_length)-i:
-                                print("\nThat is not a valid option. Try again.") 
-                                continue
-                                #kontroluje zdali nebyla zmáčknuta špatná klávesa
-                            else:
-                                if list_of_specials_choosing[int(choose_special)] == list_of_specials[1]:
-                                    warrior.special= 1
-                                    warrior.specialmem = 1
-                                elif list_of_specials_choosing[int(choose_special)] == list_of_specials[2]:
-                                    warrior.special = 2
-                                    warrior.specialmem = 1
-                                elif list_of_specials_choosing[int(choose_special)] == list_of_specials[3]:
-                                    warrior.special = 3
-                                    warrior.specialmem = 1
-                                elif list_of_specials_choosing[int(choose_special)] == list_of_specials[4]:
-                                    warrior.special = 4
-                                    warrior.specialmem = 1
-                                #porovnává výběr a přiřazuje schopnosti
-
-                                list_of_specials_choosing.pop(int(choose_special))
-                                #smaže vybranou schopnost z nakopírovaného seznamu
-                        except ValueError:
-                            #zjistí, jestli bylo vložen špatný datový typ
-                            print("\nThat is not a valid option. Try again.")
+                        choose_special = input("\n\n> ")             
+                        if 1 > int(choose_special) or int(choose_special) > int(list_of_special_length)-i:
+                            print("\nThat is not a valid option. Try again.") 
                             continue
-                        else:
-                            break 
                             #kontroluje zdali nebyla zmáčknuta špatná klávesa
+                        else:
+                            if list_of_specials_choosing[int(choose_special)] == list_of_specials[1]:
+                                warrior.special= 1
+                                warrior.specialmem = 1
+                            elif list_of_specials_choosing[int(choose_special)] == list_of_specials[2]:
+                                warrior.special = 2
+                                warrior.specialmem = 1
+                            elif list_of_specials_choosing[int(choose_special)] == list_of_specials[3]:
+                                warrior.special = 3
+                                warrior.specialmem = 1
+                            elif list_of_specials_choosing[int(choose_special)] == list_of_specials[4]:
+                                warrior.special = 4
+                                warrior.specialmem = 1
+                            #porovnává výběr a přiřazuje schopnosti
+
+                            list_of_specials_choosing.pop(int(choose_special))
+                            #smaže vybranou schopnost z nakopírovaného seznamu
+                    except ValueError:
+                        #zjistí, jestli bylo vložen špatný datový typ
+                        print("\nThat is not a valid option. Try again.")
+                        continue
+                    else:
+                        break 
+                        #kontroluje zdali nebyla zmáčknuta špatná klávesa
 
     def choose_item(self):
         #stejné jako u speciálek
@@ -144,34 +156,33 @@ class Battle:
         print("\n\n\nChoose which items your Warriors will have.")
 
         
-        for i, warrior in enumerate(list_of_warriors):
-            if i < 3:
-                while True:
-                        try:
-                            print("\nChoose item for " + warrior.name + ".")
-                            for j in range(len(list_of_items_choosing)-1):            
-                                j += 1
-                                print(f"({j}) {list_of_items_choosing[j]}", end="  ")   
-                            choose_item = input("\n\n> ")             
-                            if 1 > int(choose_item) or int(choose_item) > int(list_of_item_length)-i:
-                                print("\nThat is not a valid option. Try again.") 
-                                continue
-                            else:
-                                if list_of_items_choosing[int(choose_item)] == list_of_items[1]:
-                                    warrior.item= 1
-                                elif list_of_items_choosing[int(choose_item)] == list_of_items[2]:
-                                    warrior.item = 2
-                                elif list_of_items_choosing[int(choose_item)] == list_of_items[3]:
-                                    warrior.item = 3
-                                elif list_of_items_choosing[int(choose_item)] == list_of_items[4]:
-                                    warrior.item = 4
-
-                                list_of_items_choosing.pop(int(choose_item))
-                        except ValueError:
-                            print("\nThat is not a valid option. Try again.")
+        for i, warrior in enumerate(list_of_warriors_2):
+            while True:
+                    try:
+                        print("\nChoose item for " + warrior.name + ".")
+                        for j in range(len(list_of_items_choosing)-1):            
+                            j += 1
+                            print(f"({j}) {list_of_items_choosing[j]}", end="  ")   
+                        choose_item = input("\n\n> ")             
+                        if 1 > int(choose_item) or int(choose_item) > int(list_of_item_length)-i:
+                            print("\nThat is not a valid option. Try again.") 
                             continue
                         else:
-                            break 
+                            if list_of_items_choosing[int(choose_item)] == list_of_items[1]:
+                                warrior.item= 1
+                            elif list_of_items_choosing[int(choose_item)] == list_of_items[2]:
+                                warrior.item = 2
+                            elif list_of_items_choosing[int(choose_item)] == list_of_items[3]:
+                                warrior.item = 3
+                            elif list_of_items_choosing[int(choose_item)] == list_of_items[4]:
+                                warrior.item = 4
+
+                            list_of_items_choosing.pop(int(choose_item))
+                    except ValueError:
+                        print("\nThat is not a valid option. Try again.")
+                        continue
+                    else:
+                        break 
             
 
     def test1(self):
@@ -185,24 +196,23 @@ class Battle:
         list_of_special_length = int(len(list_of_specials_cpu))
         list_of_special_length -= 1
 
-        for i, enemy in enumerate(list_of_enemy_warriors):
-            if i < 3:
-                choose_special = random.randint(1,4-i)    
-        
-                if list_of_specials_cpu[int(choose_special)] == list_of_specials[1]:
-                    enemy.special= 1
-                    enemy.specialmem = 1
-                elif list_of_specials_cpu[int(choose_special)] == list_of_specials[2]:
-                    enemy.special = 2
-                    enemy.specialmem = 1
-                elif list_of_specials_cpu[int(choose_special)] == list_of_specials[3]:
-                    enemy.special = 3
-                    enemy.specialmem = 1
-                elif list_of_specials_cpu[int(choose_special)] == list_of_specials[4]:
-                    enemy.special = 4
-                    enemy.specialmem = 1
+        for i, enemy in enumerate(list_of_enemy_warriors_2):
+            choose_special = random.randint(1,4-i)    
+    
+            if list_of_specials_cpu[int(choose_special)] == list_of_specials[1]:
+                enemy.special= 1
+                enemy.specialmem = 1
+            elif list_of_specials_cpu[int(choose_special)] == list_of_specials[2]:
+                enemy.special = 2
+                enemy.specialmem = 1
+            elif list_of_specials_cpu[int(choose_special)] == list_of_specials[3]:
+                enemy.special = 3
+                enemy.specialmem = 1
+            elif list_of_specials_cpu[int(choose_special)] == list_of_specials[4]:
+                enemy.special = 4
+                enemy.specialmem = 1
 
-                list_of_specials_cpu.pop(int(choose_special))
+            list_of_specials_cpu.pop(int(choose_special))
 
 
     def choose_item_cpu(self):
@@ -211,20 +221,19 @@ class Battle:
         list_of_item_length = int(len(list_of_items_cpu))
         list_of_item_length = list_of_item_length - 1
         
-        for i, warrior in enumerate(list_of_warriors):
-            if i < 3:     
-                choose_item = random.randint(1,4-i) 
+        for i, enemy in enumerate(list_of_enemy_warriors_2):  
+            choose_item = random.randint(1,4-i) 
 
-                if list_of_items_cpu[int(choose_item)] == list_of_items[1]:
-                    warrior.item= 1
-                elif list_of_items_cpu[int(choose_item)] == list_of_items[2]:
-                    warrior.item = 2
-                elif list_of_items_cpu[int(choose_item)] == list_of_items[3]:
-                    warrior.item = 3
-                elif list_of_items_cpu[int(choose_item)] == list_of_items[4]:
-                    warrior.item = 4
+            if list_of_items_cpu[int(choose_item)] == list_of_items[1]:
+                enemy.item= 1
+            elif list_of_items_cpu[int(choose_item)] == list_of_items[2]:
+                enemy.item = 2
+            elif list_of_items_cpu[int(choose_item)] == list_of_items[3]:
+                enemy.item = 3
+            elif list_of_items_cpu[int(choose_item)] == list_of_items[4]:
+                enemy.item = 4
 
-                list_of_items_cpu.pop(int(choose_item))
+            list_of_items_cpu.pop(int(choose_item))
 
 
     def specials(self, warrior):
@@ -287,7 +296,7 @@ class Battle:
     def battle_menu(self):
         for i, warrior in enumerate(list_of_warriors):
             if self.leader == False and i == 3:
-                #přeskočí kapitána, pokud není vyvolán
+                #přeskočí velitele, pokud není vyvolán
                 continue
             if warrior.hp > 0:
                 if warrior.defence == 2 and warrior.item != 2 or int(warrior.defence) == 3 and warrior.item == 2:
@@ -310,7 +319,7 @@ class Battle:
                                     #defence je pět když byla využita speciálka Lasting Shield
                                     warrior.defence = 0
                                 if self.leaderX == False:
-                                    #menu cílema s a bez kapitána nepřátel
+                                    #menu s cílema s a bez velitele nepřátel
                                     choice = int(input("\nAttack who?\n" + "(1)" + enemy_warrior_1.name + "   (2)" + enemy_warrior_2.name + "   (3)" + enemy_warrior_3.name + "\n\n> "))
                                 else:
                                     choice = int(input("\nAttack who?\n" + "(1)" + enemy_warrior_1.name + "   (2)" + enemy_warrior_2.name + "   (3)" + enemy_warrior_3.name + "   (4)" + enemy_leader_1.name + "\n\n> "))
@@ -496,22 +505,15 @@ class Battle:
                         #počítač útočí když je dosažen limit bránění u nás
 
                         if int(self.cpu) == 4:
-                            decision = random.randint(0,1)
-                            if enemy.defence != 3:
-                                if decision == 1:
-                                    if enemy.name == enemy_warrior_1.name:
-                                        if warrior_1.attack == 1 or warrior_2.attack== 1 or warrior_3.attack == 1 or leader_1.attack == 1:
-                                            choice_cpu = 2
-                                    elif enemy.name == enemy_warrior_2.name:
-                                        if warrior_1.attack == 2 or warrior_2.attack== 2 or warrior_3.attack == 2 or leader_1.attack == 2:
-                                            choice_cpu = 2
-                                    elif enemy.name == enemy_warrior_3.name:
-                                        if warrior_1.attack == 3 or warrior_2.attack== 3 or warrior_3.attack == 3 or leader_1.attack == 3:
-                                            choice_cpu = 2
-                                    elif enemy.name == enemy_leader_1.name:
-                                        if warrior_1.attack == 4 or warrior_2.attack== 4 or warrior_3.attack == 4 or leader_1.attack == 4:
-                                            choice_cpu = 2
-                            #počítač může podvádět tím, že zjistí na koho se útočí
+                            for i in range(len(list_of_warriors)):
+                                decision = random.randint(0,10)
+                                if enemy.maxsh is False:
+                                    if decision == 1:
+                                        if enemy.name == list_of_enemy_warriors[i].name:
+                                            for warrior in list_of_warriors:
+                                                if int(warrior.attack) == i + 1:
+                                                    choice_cpu = 2
+                                #počítač může podvádět tím, že zjistí na koho se útočí
 
 
                     if choice_cpu == 1 or choice_cpu == 4 or choice_cpu == 5:
@@ -526,16 +528,19 @@ class Battle:
                                 enemy.attack = random.randint(1,4)
 
                             if int(self.cpu) == 2 or int(self.cpu) == 3:
+                                anotherChoice = random.randint(0,2)
 
-                                if leader_1.hp == 1 and self.leader == True:
-                                    enemy.attack = 4
-                                elif warrior_1.hp == 1:
-                                    enemy.attack = 1
-                                elif warrior_2.hp == 1:
-                                    enemy.attack = 2
-                                elif warrior_3.hp == 1:
-                                    enemy.attack = 3
-                                    #počítač útočí na slabé bojovníky
+                                if anotherChoice == 0:
+
+                                    if leader_1.hp == 1 and self.leader == True:
+                                        enemy.attack = 4
+                                    elif warrior_1.hp == 1:
+                                        enemy.attack = 1
+                                    elif warrior_2.hp == 1:
+                                        enemy.attack = 2
+                                    elif warrior_3.hp == 1:
+                                        enemy.attack = 3
+                                        #počítač útočí na slabé bojovníky
 
                             if warrior_1.hp == 0 and enemy.attack == 1:     
                                 continue
@@ -1017,8 +1022,8 @@ class Game:
         """
         #logo
 
-        version = 1.0
-        info = '\nHow to play the game?\n=====================\n\nPress buttons on your input device to pick options that were presented to you. When a ">" symbol is on the last row, an input is required to proceed. \n\nThere are 6 warriors on the battlefield at the beginning of the battle. 3 are on your side and 3 are against you. Every warrior can either attack, defend or use their Special.\nSpecials are versitile abilities that can be used once per battle. Specials are chosen for each warrior before the battle.\nWarriors also hold items, which help them throughout the battle. Those are also chosen before the battle.\nWhen only 1 warrior is left the leader will come out as a last resort backup.\nThe battle ends when there are no warriors left on one of the sides.'
+        version = 1.1
+        info = '\nHow to play the game?\n=====================\n\nPress buttons on your input device to pick options that were presented to you.\nWhen a ">" symbol is on the last row, an input is required to proceed. \n\nThere are 6 warriors on the battlefield at the beginning of the battle. 3 are on your side and 3 are against you.\n\nEvery warrior can either attack, defend or use their Special.\nSpecials are versitile abilities that can be used once per battle.\nSpecials are chosen for each warrior before the battle.\n\nWarriors also hold items, which help them throughout the battle. Those are also chosen before the battle.\n\nWhen only 1 warrior is left the leader will come out as a last resort backup.\n\nThe battle ends when there are no warriors left on one of the sides.'
         #údaje o hře
 
         with open('win_streak.py', 'r+') as f:
@@ -1039,7 +1044,7 @@ class Game:
                     continue
                 elif int(the_choice) == 3:
                     options = input(
-                        f"{info}\n\n\n\nVersion {version} - Finally done.\n\nCreated by Honza Pudil\n\n> "
+                        f"{info}\n\n\n\nVersion {version} - Bugs squashed\n\nCreated by Honza Pudil\n\n> "
                         )
                     continue
                 elif int(the_choice) == 4:
